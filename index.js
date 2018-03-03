@@ -96,8 +96,10 @@
          * @return {number} The day number
          */
 
+    // CHANGE: Week starts on Monday now
+
     function getWeekNumber(date) {
-      return d3.timeWeek.count(d3.timeYear(date), date);
+      return d3.timeMonday.count(d3.timeYear(date), date);
     }
 
     /**
@@ -109,8 +111,11 @@
          * @return {number} The day number
          */
 
+    // CHANGE: 0 represents Monday, 6 represents Sunday.
+    // Another way to do this is date.getDay() || 7 - 1
+
     function getDayNumber(date) {
-      return date.getDay();
+      return (date.getDay() + 6) % 7;
     }
 
     /**
@@ -242,10 +247,10 @@
         thisMonthWeekOfYear; //  0 (first week) - 51 (last week)
 
       nextMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-      thisMonthDayOfWeek = month.getDay();
-      thisMonthWeekOfYear = d3.timeWeek.count(d3.timeYear(month), month);
-      nextMonthDayOfWeek = nextMonth.getDay();
-      nextMonthWeekOfYear = d3.timeWeek.count(
+      thisMonthDayOfWeek = (month.getDay() || 7) - 1;
+      thisMonthWeekOfYear = d3.timeMonday.count(d3.timeYear(month), month);
+      nextMonthDayOfWeek = (nextMonth.getDay() || 7) - 1;
+      nextMonthWeekOfYear = d3.timeMonday.count(
         d3.timeYear(nextMonth),
         nextMonth
       );
@@ -433,14 +438,14 @@
   //  (1) load the data in the CSV file
   //  (2) transform it into the format we need
   //  (3) render the transformed data
-  d3.csv("dji.csv", function(err, csv) {
-    var data;
-
-    if (err) {
-      throw err;
-    }
-
-    data = transformCsvData(csv);
-    render(data);
-  });
+  // d3.csv("dji.csv", function(err, csv) {
+  //   var data;
+  //
+  //   if (err) {
+  //     throw err;
+  //   }
+  //
+  data = transformCsvData(csv);
+  render(data);
+  // });
 })();
