@@ -1,7 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #ccc;
   font: 10px sans-serif;
   shape-rendering: crispEdges;
+  -webkit-box-sizing: border-box;
+}
+
+.title {
+  height: 100px;
+  font-size: 50px;
+  padding: 30px;
+}
+
+.root {
+  background-color: #ccc;
+  margin: 0 30px;
+  width: 960px;
 }
 
 .day {
